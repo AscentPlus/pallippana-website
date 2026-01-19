@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Pallippana</title>
+    <meta name="description" content="Photo gallery of Pallippana ritual and Ambalapuzha temple events.">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <!-- SEO Meta Tags -->
+    <meta name="keywords"
+        content="Pallippana, Ambalapuzha, Temple, Ritual, Kerala, Dravyakalasam, 2026, Gallery, Photos">
+    <meta name="author" content="Pallippana Media Cell">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.pallippana2026.com/gallery.html">
+    <meta property="og:title" content="Gallery | Pallippana 2026">
+    <meta property="og:description" content="Photo gallery of Pallippana ritual and Ambalapuzha temple events.">
+    <meta property="og:image" content="images/logo.png">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.pallippana2026.com/gallery.html">
+    <meta property="twitter:title" content="Gallery | Pallippana 2026">
+    <meta property="twitter:description" content="Photo gallery of Pallippana ritual and Ambalapuzha temple events.">
+    <meta property="twitter:image" content="images/logo.png">
+    <style>
+        /* Internal override for gallery page specific needs if any, usually keep in style.css */
+        body {
+            background-color: var(--content-white);
+        }
+
+        .gallery-page-header {
+            padding-top: 120px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled static-nav">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Pallippana Logo">
+            <div class="logo-text">
+                <span class="logo-main">Pallippana</span>
+                <span class="logo-sub">Dravyakalasam</span>
+            </div>
+        </a>
+        <div class="menu-toggle">☰</div>
+        <div class="nav-links">
+            <a href="index.html">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="fade-in">
+        <div class="section-title">
+            <h2>Photo Gallery</h2>
+        </div>
+        <div class="gallery-grid">
+            <!-- Generating 11 items for gallery_1.jpg to gallery_11.jpg -->
+            <div class="gallery-item" data-index="0">
+                <img src="images/gallery_1.jpg" alt="Gallery Image 1">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="1">
+                <img src="images/gallery_2.jpg" alt="Gallery Image 2">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="2">
+                <img src="images/gallery_3.jpg" alt="Gallery Image 3">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="3">
+                <img src="images/gallery_4.jpg" alt="Gallery Image 4">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="4">
+                <img src="images/gallery_5.jpg" alt="Gallery Image 5">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="5">
+                <img src="images/gallery_6.jpg" alt="Gallery Image 6">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="6">
+                <img src="images/gallery_7.jpg" alt="Gallery Image 7">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="7">
+                <img src="images/gallery_8.jpg" alt="Gallery Image 8">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="8">
+                <img src="images/gallery_9.jpg" alt="Gallery Image 9">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="9">
+                <img src="images/gallery_10.jpg" alt="Gallery Image 10">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+            <div class="gallery-item" data-index="10">
+                <img src="images/gallery_11.jpg" alt="Gallery Image 11">
+                <div class="gallery-overlay"><span>+</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <button class="lightbox-nav prev" id="lightbox-prev">&#10094;</button>
+        <img src="" alt="Zoomed Image" id="lightbox-img">
+        <button class="lightbox-nav next" id="lightbox-next">&#10095;</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Pallippana Dravyakalasam 2026 | Ambalapuzha Sree Krishna Swamy Temple</p>
+        <p style="font-size: 0.8rem; margin-top: 10px;">&copy; Pallippana Media Cell 2026 </p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
