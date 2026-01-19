@@ -641,6 +641,12 @@ footer p {
         flex-direction: column;
     }
 
+    .program-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
     .navbar {
         padding: 1rem 5%;
     }
