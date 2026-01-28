@@ -2,13 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Sticky Navbar ---
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
+    const handleScroll = () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-    });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    // Re-check after a delay to catch browser auto-scroll to anchors
+    setTimeout(handleScroll, 100);
+    setTimeout(handleScroll, 500);
 
     // --- Mobile Menu Toggle ---
     const menuToggle = document.querySelector('.menu-toggle');
@@ -69,32 +75,173 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
-    // --- Accordion for Programs ---
-    const programHeaders = document.querySelectorAll('.program-header');
+    // --- Program Slider Logic ---
+    const sliderTrack = document.querySelector('.program-slider-track');
+    const programCards = document.querySelectorAll('.program-card');
 
-    programHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
+    if (sliderTrack && programCards.length > 0) {
+        // 1. Double Cloning for robust infinite loop (Prepend and Append)
+        const cardWidth = 300;
+        const gap = 32;
+        const step = cardWidth + gap;
+        const totalCards = programCards.length;
 
-            // Toggle active class
-            header.classList.toggle('active');
-
-            // Toggle max-height for slide effect
-            if (header.classList.contains('active')) {
-                content.style.maxHeight = content.scrollHeight + "px";
-            } else {
-                content.style.maxHeight = 0;
-            }
-
-            // Optional: Close others
-            programHeaders.forEach(otherHeader => {
-                if (otherHeader !== header && otherHeader.classList.contains('active')) {
-                    otherHeader.classList.remove('active');
-                    otherHeader.nextElementSibling.style.maxHeight = 0;
-                }
-            });
+        // Prepend clones
+        [...programCards].reverse().forEach(card => {
+            const clone = card.cloneNode(true);
+            clone.classList.add('clone');
+            sliderTrack.insertBefore(clone, sliderTrack.firstChild);
         });
-    });
+
+        // Append clones
+        programCards.forEach(card => {
+            const clone = card.cloneNode(true);
+            clone.classList.add('clone');
+            sliderTrack.appendChild(clone);
+        });
+
+        // Current index starts at the first card of the original set
+        let currentIndex = totalCards;
+        let isTransitioning = false;
+
+        const updateSliderPosition = (withTransition = true) => {
+            // Align to left of viewport (within padding) for 1, 2, 3... sequence
+            const offset = -(currentIndex * step);
+            sliderTrack.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+            sliderTrack.style.transform = `translateX(${offset}px)`;
+        };
+
+        const handleSeamlessLoop = () => {
+            if (currentIndex >= totalCards * 2) {
+                // We're on the appended set, jump back to original set
+                currentIndex -= totalCards;
+                updateSliderPosition(false);
+            } else if (currentIndex < totalCards) {
+                // We're on the prepended set, jump forward to original set
+                currentIndex += totalCards;
+                updateSliderPosition(false);
+            }
+            isTransitioning = false;
+        };
+
+        const slideNext = () => {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex++;
+            updateSliderPosition(true);
+            setTimeout(handleSeamlessLoop, 500); // Wait for transition
+        };
+
+        const slidePrev = () => {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex--;
+            updateSliderPosition(true);
+            setTimeout(handleSeamlessLoop, 500); // Wait for transition
+        };
+
+        let autoSlideInterval;
+        const autoSlideDelay = 3000;
+
+        const startAutoSlide = () => {
+            stopAutoSlide();
+            autoSlideInterval = setInterval(slideNext, autoSlideDelay);
+        };
+
+        const stopAutoSlide = () => {
+            clearInterval(autoSlideInterval);
+        };
+
+        // Initialize position
+        const initSlider = () => {
+            updateSliderPosition(false);
+            // Re-run after a short delay to account for any late layout shifts/font loads
+            setTimeout(() => updateSliderPosition(false), 100);
+            startAutoSlide();
+        };
+
+        if (document.readyState === 'complete') {
+            initSlider();
+        } else {
+            window.addEventListener('load', initSlider);
+        }
+
+        // Pause on Hover
+        sliderTrack.addEventListener('mouseenter', stopAutoSlide);
+        sliderTrack.addEventListener('mouseleave', startAutoSlide);
+
+        // Manual Controls
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                slidePrev();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                stopAutoSlide();
+                slideNext();
+            });
+
+            prevBtn.addEventListener('mouseenter', stopAutoSlide);
+            nextBtn.addEventListener('mouseenter', stopAutoSlide);
+        }
+
+        // Resize Listener
+        window.addEventListener('resize', () => {
+            // Stop auto slide temporarily to prevent conflict or jumpiness
+            stopAutoSlide();
+            // Recalculate position
+            sliderTrack.style.transition = 'none'; // Instant update
+            updateSliderPosition();
+            // Debounce or just restart auto slide?
+            // Simple restart
+            startAutoSlide();
+        });
+
+        // 3. Navigation interaction (Replacing Modal)
+        // Use event delegation for original and cloned cards
+        sliderTrack.addEventListener('click', (e) => {
+            const card = e.target.closest('.program-card');
+            if (!card) return;
+
+            // Get day number from data-day="Day X"
+            const dayText = card.getAttribute('data-day');
+            const dayNumber = dayText.replace('Day ', '');
+
+            // Navigate to day-wise.html with hash
+            window.location.href = `day-wise.html#day-${dayNumber}`;
+        });
+
+        // 4. Day-wise Detail Page Scroll logic
+        if (window.location.pathname.includes('day-wise.html')) {
+            const scrollToDay = () => {
+                const hash = window.location.hash;
+                if (hash && hash.startsWith('#day-')) {
+                    const target = document.querySelector(hash);
+                    if (target) {
+                        setTimeout(() => {
+                            const headerOffset = 100;
+                            const elementPosition = target.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
+                        }, 100); // Small delay to ensure page is ready
+                    }
+                }
+            };
+
+            // Run on load
+            window.addEventListener('load', scrollToDay);
+            // Run on hash change (if already on page)
+            window.addEventListener('hashchange', scrollToDay);
+        }
+    }
 
     // --- Lightbox for Gallery ---
     const galleryItems = document.querySelectorAll('.gallery-item');
