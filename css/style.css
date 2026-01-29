@@ -242,6 +242,7 @@ section {
 .section-title h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    margin-top: 3rem;
     position: relative;
     display: inline-block;
 }
@@ -269,7 +270,7 @@ section {
 
 .history-text p {
     margin-bottom: 1.5rem;
-    text-align: justify;
+    text-align: center;
 }
 
 .history-image {
@@ -330,7 +331,7 @@ section {
 }
 
 .news-card p {
-    text-align: left;
+    text-align: center;
     overflow-wrap: break-word;
     word-break: break-word;
     line-height: 1.6;
@@ -730,7 +731,7 @@ section {
 
 .day-desc p {
     margin-bottom: 1.2rem;
-    text-align: justify;
+    text-align: center;
     line-height: 1.8;
     color: #444;
 }

@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Clean URL Logic ---
+    const cleanURL = () => {
+        try {
+            if (window.history.replaceState && window.location.protocol !== 'file:') {
+                // Mask the URL to show only the root domain
+                window.history.replaceState(null, document.title, '/');
+            }
+        } catch (e) {
+            console.warn("Could not clean URL:", e);
+        }
+    };
+
+    // Initial clean on page load
+    cleanURL();
+
 
     // --- Sticky Navbar ---
     const navbar = document.querySelector('.navbar');
@@ -51,9 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     top: offsetPosition,
                     behavior: "smooth"
                 });
+
+                // Clean the URL after a short delay to allow scroll to initiate
+                setTimeout(cleanURL, 100);
             }
         });
     });
+
 
     // --- Fade In Animation Details ---
     const observerOptions = {
@@ -237,19 +256,47 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             // Run on load
-            window.addEventListener('load', scrollToDay);
+            window.addEventListener('load', () => {
+                scrollToDay();
+                setTimeout(cleanURL, 200);
+            });
             // Run on hash change (if already on page)
-            window.addEventListener('hashchange', scrollToDay);
+            window.addEventListener('hashchange', () => {
+                scrollToDay();
+                setTimeout(cleanURL, 200);
+            });
         }
     }
 
+
+    // --- Dynamic Gallery Rendering ---
+    const galleryGrid = document.getElementById('gallery-grid');
+    if (galleryGrid && typeof ALL_IMAGES !== 'undefined') {
+        ALL_IMAGES.forEach((imageData, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.setAttribute('data-index', index);
+
+            // Google Drive Direct Link format
+            const imageUrl = `https://lh3.googleusercontent.com/d/${imageData.id}=w1000`;
+
+            item.innerHTML = `
+                <img src="${imageUrl}" alt="${imageData.alt || 'Gallery Image'}" loading="lazy">
+                <div class="gallery-overlay"><span>+</span></div>
+            `;
+            galleryGrid.appendChild(item);
+        });
+    }
+
     // --- Lightbox for Gallery ---
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    // Use event delegation for gallery items since they are dynamic
+    const getGalleryItems = () => document.querySelectorAll('.gallery-item');
     let lightbox = document.getElementById('lightbox');
 
     // Create lightbox if it doesn't exist (fallback for pages where it might be missing but script runs or if removed from HTML)
     // However, since we added it to gallery.html, we prioritize using that.
-    if (galleryItems.length > 0) {
+    const itemsForLightbox = getGalleryItems();
+    if (itemsForLightbox.length > 0) {
         if (!lightbox) {
             lightbox = document.createElement('div');
             lightbox.id = 'lightbox';
@@ -271,22 +318,26 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
 
         const updateImage = (index) => {
-            if (index < 0) index = galleryItems.length - 1;
-            if (index >= galleryItems.length) index = 0;
+            const items = getGalleryItems();
+            if (index < 0) index = items.length - 1;
+            if (index >= items.length) index = 0;
             currentIndex = index;
 
-            const item = galleryItems[currentIndex];
+            const item = items[currentIndex];
             const img = item.querySelector('img');
             lightboxImg.src = img.src;
         };
 
-        galleryItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentIndex = index;
+        // Use event delegation for dynamic items
+        document.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item && galleryGrid && galleryGrid.contains(item)) {
+                const items = getGalleryItems();
+                currentIndex = parseInt(item.getAttribute('data-index'));
                 updateImage(currentIndex);
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
-            });
+            }
         });
 
         const closeLightbox = () => {
