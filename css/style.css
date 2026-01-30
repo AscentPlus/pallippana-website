@@ -256,10 +256,86 @@ section {
     margin: 10px auto 0;
 }
 
+/* Alternating Layout Utility Classes */
+.content-row {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.content-text {
+    flex: 1;
+    line-height: 1.8;
+}
+
+.content-text p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+}
+
+.content-image {
+    flex: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    border: 3px solid var(--accent-gold);
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.full-width-text {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+}
+
+.full-width-text p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+}
+
+/* Mobile responsive for alternating layout */
+@media (max-width: 850px) {
+
+    .content-row,
+    .content-row.reverse {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .content-image {
+        width: 100%;
+        max-height: 300px;
+        order: -1;
+        /* Image always appears first on mobile */
+    }
+
+    .content-text p,
+    .full-width-text p {
+        text-align: center;
+    }
+}
+
 /* History Section */
 .history-container {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     gap: 2rem;
 }
@@ -759,10 +835,19 @@ section {
 }
 
 /* Gallery Section */
+#gallery {
+    min-height: 100vh;
+    /* Ensure section has minimum height */
+    padding: 3rem 5%;
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
+    min-height: 500px;
+    /* Ensure grid has minimum height */
+    width: 100%;
 }
 
 .gallery-item {
@@ -771,6 +856,13 @@ section {
     border-radius: 8px;
     cursor: pointer;
     height: 250px;
+    min-height: 250px;
+    /* Prevent collapsing */
+    width: 100%;
+    background-color: #f0f0f0;
+    /* Fallback background while images load */
+    border: 1px solid #e0e0e0;
+    /* Visible border to show items exist */
 }
 
 .gallery-item img {
@@ -778,6 +870,12 @@ section {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    display: block;
+    /* Ensures no extra space below image */
+    background-color: #e0e0e0;
+    /* Fallback if image fails to load */
+    min-height: 250px;
+    /* Match parent height */
 }
 
 .gallery-item:hover img {
@@ -874,6 +972,37 @@ section {
 
     .address-box {
         text-align: center;
+    }
+
+    /* Gallery mobile fixes */
+    #gallery {
+        min-height: 100vh;
+        padding: 2rem 3%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        min-height: 600px;
+        /* Increased for mobile */
+        width: 100%;
+        padding: 0;
+    }
+
+    .gallery-item {
+        height: 180px;
+        min-height: 180px;
+        /* Ensure items don't collapse */
+        width: 100%;
+        border: 2px solid #d0d0d0;
+        /* More visible border on mobile */
+    }
+
+    .gallery-item img {
+        min-height: 180px;
+        /* Ensure images have minimum height */
+        width: 100%;
+        height: 100%;
     }
 }
 
