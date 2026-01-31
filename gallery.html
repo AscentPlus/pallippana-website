@@ -57,7 +57,7 @@
     </nav>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="fade-in">
+    <section id="gallery">
         <div class="section-title">
             <h2>Photo Gallery</h2>
         </div>
@@ -69,16 +69,84 @@
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <div class="lightbox-controls">
+            <button class="lightbox-btn" id="lightbox-share" title="Share">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            </button>
+            <button class="lightbox-btn" id="lightbox-download" title="Download">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="9" x2="12" y2="15"/></svg>
+            </button>
+        </div>
         <button class="lightbox-nav prev" id="lightbox-prev">&#10094;</button>
         <img src="" alt="Zoomed Image" id="lightbox-img">
         <button class="lightbox-nav next" id="lightbox-next">&#10095;</button>
     </div>
 
     <footer>
-        <p>Pallippana Dravyakalasam 2026 | Ambalapuzha Sree Krishna Swamy Temple</p>
-        <p style="font-size: 0.8rem; margin-top: 10px;">&copy; Pallippana Media Cell 2026 </p>
-        <p style="font-size: 0.8rem; margin-top: 5px;">Website designed by <a href="http://www.ascentplus.net"
-                target="_blank">Ascent Plus</a></p>
+        <div class="footer-container">
+            <!-- Column 1: Donation Details -->
+            <div class="footer-column">
+                <h3>Donation Details</h3>
+                <div class="footer-info">
+                    <p>Account Name: Pallippana Bank Account</p>
+                    <p>Bank: Dhanalaxshmi Bank Ambalapuzha</p>
+                    <p>Account Number:027303500000470</p>
+                    <p>IFSC Code:DLXB0000273</p>
+                </div>
+            </div>
+
+            <!-- Column 2: Logo -->
+            <div class="footer-column footer-logo-column">
+                <img src="images/logo.png" alt="Pallippana Logo" class="footer-logo">
+                <p class="footer-temple-name">Ambalapuzha Sree Krishna Swamy Temple</p>
+            </div>
+
+            <!-- Column 3: Social Links -->
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/" target="_blank" class="social-icon" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61585844397076" target="_blank" class="social-icon"
+                        title="Facebook">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:ambalapuzhatemplepallippana26@gmail.com" class="social-icon" title="Email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </a>
+                    <a href="tel:+919447954687" class="social-icon" title="Call Us">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.09-2.09a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="footer-contact-info">
+                    <p><strong>Phone:</strong> +91 9447954687</p>
+                    <p><strong>Email:</strong> ambalapuzhatemplepallippana26@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 Pallippana Media Cell. All Rights Reserved</p>
+            <p>Website designed by <a href="http://www.ascentplus.net" target="_blank">Ascent Plus</a></p>
+        </div>
     </footer>
 
     <script src="photos.js"></script>
