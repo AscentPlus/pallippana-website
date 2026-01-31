@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initial clean on page load
-    cleanURL();
+    // Initial clean on page load - Deferred to allow hash/anchor scrolling
+    window.addEventListener('load', () => {
+        // Wait for native scroll or JS scroll to initiate
+        setTimeout(cleanURL, 500);
+    });
 
 
     // --- Dynamic Gallery Rendering ---
@@ -112,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
-                a.href = url;                
+                a.href = url;
                 a.download = `pallippana-image-${Date.now()}.jpeg`;
                 document.body.appendChild(a);
                 a.click();
