@@ -1,4 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Reload Handling & State Persistence ---
+    // Identify current page based on body class (URL might be clean/misleading)
+    const isDayWisePage = document.body.classList.contains('day-wise-page');
+    const currentPageId = isDayWisePage ? 'day-wise' : 'home';
+
+    // Check for reload
+    const navigationEntry = performance.getEntriesByType("navigation")[0];
+    if (navigationEntry && navigationEntry.type === 'reload') {
+        const savedPage = sessionStorage.getItem('last_page_id');
+        const savedHash = sessionStorage.getItem('last_hash');
+
+        if (savedPage && savedPage !== currentPageId) {
+            // Mismatch detected (likely Reloaded on Day-Wise but server sent Index due to clean URL)
+            if (savedPage === 'day-wise') {
+                // Redirect back to day-wise with the saved hash
+                window.location.href = 'day-wise.html' + (savedHash || '');
+                return; // Stop further execution to prevent flash/errors
+            }
+        } else if (savedHash && window.location.hash !== savedHash) {
+            // Same page but hash lost. Restore it to trigger scroll logic.
+            // Using replaceState to avoid cluttering history
+            history.replaceState(null, null, savedHash);
+        }
+    }
+
     // --- Clean URL Logic ---
     const cleanURL = () => {
         try {
@@ -11,11 +36,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Initial clean on page load
-    // Initial clean on page load - Deferred to allow hash/anchor scrolling
+    // Internal state tracking for "virtual" hash
+    let currentVirtualHash = window.location.hash;
+
+    // Initial clean on page load - Deferred
     window.addEventListener('load', () => {
         // Wait for native scroll or JS scroll to initiate
-        setTimeout(cleanURL, 500);
+        setTimeout(() => {
+            cleanURL();
+            // Start tracking state for next reload
+            window.addEventListener('beforeunload', () => {
+                sessionStorage.setItem('last_page_id', currentPageId);
+                sessionStorage.setItem('last_hash', currentVirtualHash || window.location.hash);
+            });
+        }, 500);
     });
 
 
