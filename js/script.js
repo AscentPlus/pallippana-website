@@ -246,6 +246,34 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === "ArrowLeft") updateImage(currentIndex - 1);
             if (e.key === "ArrowRight") updateImage(currentIndex + 1);
         });
+
+        // --- Swipe Support for Mobile ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const minSwipeDistance = 50;
+
+        lightbox.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        const handleSwipe = () => {
+            const distance = touchStartX - touchEndX;
+
+            if (Math.abs(distance) > minSwipeDistance) {
+                if (distance > 0) {
+                    // Swiped Left -> Next Image
+                    updateImage(currentIndex + 1);
+                } else {
+                    // Swiped Right -> Previous Image
+                    updateImage(currentIndex - 1);
+                }
+            }
+        };
     }
 
     // --- Sticky Navbar ---

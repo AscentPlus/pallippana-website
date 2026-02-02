@@ -27,12 +27,20 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
 body {
     font-family: var(--font-body);
     background-color: var(--content-white);
     color: var(--text-dark);
     line-height: 1.6;
-    overflow-x: hidden;
     -webkit-user-select: none;
     /* Safari */
     -ms-user-select: none;
@@ -1183,11 +1191,15 @@ footer a:hover {
     }
 
     .navbar {
-        padding: 1rem 5%;
+        padding: 1rem 1rem;
     }
 
     .navbar.scrolled {
-        padding: 1rem 5%;
+        padding: 1rem 1rem;
+    }
+
+    section {
+        padding: 2rem 1rem;
     }
 
     .logo img {
@@ -1536,8 +1548,10 @@ footer {
 
 .donation-table td:nth-child(2),
 .donation-table td:nth-child(3),
+.donation-table td:nth-child(4),
 .donation-table th:nth-child(2),
-.donation-table th:nth-child(3) {
+.donation-table th:nth-child(3),
+.donation-table th:nth-child(4) {
     text-align: center;
     width: 100px;
 }
@@ -1580,9 +1594,17 @@ footer {
 
     .donation-table td:nth-child(2),
     .donation-table td:nth-child(3),
+    .donation-table td:nth-child(4),
     .donation-table th:nth-child(2),
-    .donation-table th:nth-child(3) {
-        width: 70px;
+    .donation-table th:nth-child(3),
+    .donation-table th:nth-child(4) {
+        width: 55px;
+        padding: 0.45rem 0.2rem;
+    }
+
+    .donation-table td {
+        word-break: break-word;
+        hyphens: auto;
     }
 }
 
