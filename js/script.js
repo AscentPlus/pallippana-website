@@ -73,18 +73,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Dynamic Media Cards Rendering ---
-    const mediaGrid = document.getElementById('media-grid');
-    if (mediaGrid && typeof ALL_CARDS !== 'undefined') {
-        ALL_CARDS.forEach((cardData, index) => {
+    // --- Dynamic Gallery Section Rendering (Home Page) ---
+    const galleryPart1 = document.getElementById('gallery-part-1');
+    const galleryPart2 = document.getElementById('gallery-part-2');
+
+    // Helper to get random items
+    const getRandomItems = (arr, count) => {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+    };
+
+    // Part 1: First 15 Media Cards
+    if (galleryPart1 && typeof ALL_CARDS !== 'undefined') {
+        const first15Cards = ALL_CARDS.slice(0, 24);
+        first15Cards.forEach((cardData, index) => {
             const card = document.createElement('div');
-            card.className = 'media-card';
-            card.setAttribute('data-index', index);
+            card.className = 'media-card'; // Reuse media-card styling for consistency
+            // card.setAttribute('data-index', index); // Indexing might be tricky with mixed types for lightbox, handling below
+
             // Google Drive Direct Link format for smaller cards
             const imageUrl = `https://lh3.googleusercontent.com/d/${cardData.id}=w400`;
+
+            // Add a data attribute to identify original source if needed for lightbox, 
+            // but the lightbox logic grabs all .media-card elements from DOM, so it should just work.
+
             card.innerHTML = `
                 <img src="${imageUrl}" alt="${cardData.alt || 'Media Card'}" loading="lazy">
             `;
-            mediaGrid.appendChild(card);
+            galleryPart1.appendChild(card);
+        });
+    }
+
+    // Part 2: 24 Random Gallery Images
+    if (galleryPart2 && typeof ALL_IMAGES !== 'undefined') {
+        const random15Images = getRandomItems(ALL_IMAGES, 24);
+        random15Images.forEach((imageData, index) => {
+            const card = document.createElement('div');
+            card.className = 'media-card'; // Reuse media-card styling for uniformity in this section
+
+            const imageUrl = `https://lh3.googleusercontent.com/d/${imageData.id}=w400`;
+
+            card.innerHTML = `
+                <img src="${imageUrl}" alt="${imageData.alt || 'Gallery Image'}" loading="lazy">
+            `;
+            galleryPart2.appendChild(card);
         });
     }
 
