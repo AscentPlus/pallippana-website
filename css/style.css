@@ -194,20 +194,109 @@ ul {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     background: linear-gradient(rgba(0, 77, 77, 0.7), rgba(0, 51, 51, 0.5)), url('../images/home.png');
     background-size: cover;
-    background-position: center;
+    background-position: top center;
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     color: var(--content-white);
-    padding: 120px 20px 0;
-    /* Added top padding to push content down */
+    padding: 150px 20px 30px;
+    position: relative;
+}
+
+/* Scrolling News Ticker */
+.news-ticker-container {
+    position: absolute;
+    top: 87px;
+    left: 0;
+    width: 100%;
+    background-color: var(--temple-orange);
+    color: var(--dark-teal);
+    z-index: 999;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 40s linear infinite;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+/* Live Button */
+.live-btn {
+    position: absolute;
+    top: 137px;
+    right: 5%;
+    background-color: #ff0000;
+    color: white !important;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 998;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4);
+    animation: pulse 2s infinite;
+    letter-spacing: 1px;
+}
+
+.live-btn::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
 }
 
 .hero-logo {
