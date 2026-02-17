@@ -104,10 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Part 2: 24 Random Gallery Images
+    // Part 2: 24 Latest Gallery Images
     if (galleryPart2 && typeof ALL_IMAGES !== 'undefined') {
-        const random15Images = getRandomItems(ALL_IMAGES, 24);
-        random15Images.forEach((imageData, index) => {
+        const displayImages = ALL_IMAGES.slice(0, 24);
+        displayImages.forEach((imageData, index) => {
             const card = document.createElement('div');
             card.className = 'media-card'; // Reuse media-card styling for uniformity in this section
 
